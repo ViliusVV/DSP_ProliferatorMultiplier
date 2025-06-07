@@ -64,9 +64,6 @@
       <Reference Include="0Harmony">
         <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Dyson Sphere Program\BepInEx\core\0Harmony.dll</HintPath>
       </Reference>
-<!--      <Reference Include="0Harmony20">-->
-<!--        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Dyson Sphere Program\BepInEx\core\0Harmony20.dll</HintPath>-->
-<!--      </Reference>-->
       <Reference Include="Assembly-CSharp">
         <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Dyson Sphere Program\DSPGAME_Data\Managed\Assembly-CSharp.dll</HintPath>
       </Reference>
