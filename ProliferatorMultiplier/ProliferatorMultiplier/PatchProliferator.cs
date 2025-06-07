@@ -97,7 +97,7 @@ namespace ProliferatorMultiplier
 
         public static void Teardown()
         {
-            Log.LogInfo("ProliferatorMultiplier: Ending...");
+            Log.LogInfo("Teardown...");
             RestoreTable(ref Cargo.incTableMilli, BackupIncTableMilli);
             RestoreTable(ref Cargo.incTable, BackupIncTable);
             RestoreTable(ref Cargo.incFastDivisionNumerator, BackupIncFastDivisionNumerator);
@@ -105,7 +105,7 @@ namespace ProliferatorMultiplier
             RestoreTable(ref Cargo.accTable, BackupAccTable);
             RestoreTable(ref Cargo.powerTable, BackupPowerTable);
             RestoreTable(ref Cargo.powerTableRatio, BackupPowerTableRatio);
-            Log.LogInfo("ProliferatorMultiplier: Ended.");
+            Log.LogInfo("Teardown done.");
         }
 
         private static T[] CopyTable<T>(ref T[] original)
@@ -117,7 +117,6 @@ namespace ProliferatorMultiplier
         
         private static void PatchIncTable(int mult, ref double[] original)
         {
-            Log.LogInfo("PatchIncTable<double> called");
             for (var i = 0; i < original.Length; i++)
             {
                 original[i] *= mult;
@@ -126,7 +125,6 @@ namespace ProliferatorMultiplier
         
         private static void PatchIncTable(int mult, ref int[] original)
         {
-            Log.LogInfo("PatchIncTable<double> called");
             for (var i = 0; i < original.Length; i++)
             {
                 original[i] *= mult;
@@ -135,7 +133,6 @@ namespace ProliferatorMultiplier
         
         private static void PatchIncDivisionTable(ref int[] original)
         {
-            Log.LogInfo("PatchIncDivisionTable called");
             for (var i = 0; i < original.Length; i++)
             {
                 original[i] = Cargo.incFastDivisionDenominator + (int)Math.Round(Cargo.incTableMilli[i] * Cargo.incFastDivisionDenominator);
@@ -144,7 +141,6 @@ namespace ProliferatorMultiplier
         
         private static void PatchPowerTableRatio(int mult, ref double[] original)
         {
-            Log.LogInfo("PatchPowerTableRatio called");
             for (var i = 0; i < original.Length; i++)
             {
                 original[i] = ((original[i] - 1) * mult) + 1;
