@@ -12,30 +12,33 @@ namespace ProliferatorMultiplier
 
         private static PatchProliferator _plugin;
         private static bool _wasF5DownLastFrame = false;
+        private static readonly bool IsDev = Debug.isDebugBuild;
         
         private void Awake()
         {
-            Logger.LogInfo($"Plugin {PluginName} is loaded!");
-
+            Logger.LogInfo($"Plugin {PluginName} is loaded! Version: {PluginVersion}");
+            if (IsDev)
+            {
+                Logger.LogInfo("Running in development mode. F5 key will reload config");   
+            }
+            
             _plugin = new PatchProliferator(Config, Logger);
             _plugin.Init();
         }
         
         private void Update()
         {
+            if(!IsDev) return;
+            
             var isF5Down = Input.GetKey(KeyCode.F5);
 
             if (isF5Down && !_wasF5DownLastFrame)
             {
-                OnF5Pressed();
+                _plugin.ReloadConfig();
+                Logger.LogInfo("F5 was pressed!");
             }
 
             _wasF5DownLastFrame = isF5Down;
-        }
-
-        private void OnF5Pressed()
-        {
-            Logger.LogInfo("F5 was pressed!");
         }
 
 
