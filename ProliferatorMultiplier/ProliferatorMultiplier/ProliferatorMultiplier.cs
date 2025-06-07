@@ -9,8 +9,7 @@ namespace ProliferatorMultiplier
         private const string PluginGuid = "proliferatormultiplier";
         private const string PluginName = "ProliferatorMultiplier";
         private const string PluginVersion = "1.0";
-
-        private static PatchProliferator _plugin;
+        
         private static bool _wasF5DownLastFrame = false;
         private static readonly bool IsDev = Debug.isDebugBuild;
         
@@ -22,8 +21,7 @@ namespace ProliferatorMultiplier
                 Logger.LogInfo("Running in development mode. F5 key will reload config");   
             }
             
-            _plugin = new PatchProliferator(Config, Logger);
-            _plugin.Init();
+            PatchProliferator.Init(Config, Logger);
         }
         
         private void Update()
@@ -34,17 +32,16 @@ namespace ProliferatorMultiplier
 
             if (isF5Down && !_wasF5DownLastFrame)
             {
-                _plugin.ReloadConfig();
+                PatchProliferator.ReloadConfig();
                 Logger.LogInfo("F5 was pressed!");
             }
 
             _wasF5DownLastFrame = isF5Down;
         }
 
-
         private void OnDestroy()
         {
-            _plugin.End();
+            PatchProliferator.Teardown();
         }
     }
 }
