@@ -39,7 +39,7 @@
         copy /Y "$(TargetDir)ProliferatorMultiplier.dll" "$(SolutionDir)thunderstore\ProliferatorMultiplier\ProliferatorMultiplier.dll"
       </PostBuildEvent>
       <PostBuildEvent>
-        powershell -Command "Compress-Archive -Path '$(SolutionDir)thunderstore\*' -DestinationPath '$(SolutionDir)ProliferatorMultiplier-1.0.0.zip' -Force"
+        powershell -Command "Compress-Archive -Path '$(SolutionDir)thunderstore\*' -DestinationPath '$(SolutionDir)ProliferatorMultiplier-1.0.3.zip' -Force"
       </PostBuildEvent>
     </PropertyGroup>
 

@@ -48,8 +48,8 @@ namespace ProliferatorMultiplier
         private static void Patch()
         {
             // Patch spray bonus tables
-            PatchIncTable(MultProduction.Value, BackupIncTableMilli,  ref Cargo.incTableMilli);
             PatchIncTable(MultProduction.Value, BackupIncTable, ref Cargo.incTable);
+            PatchIncTable(MultProduction.Value, BackupIncTableMilli,  ref Cargo.incTableMilli);
             PatchIncDivisionTable(ref Cargo.incFastDivisionNumerator);
             PatchIncTable(MultSpeed.Value, BackupAccTableMilli, ref Cargo.accTableMilli);
             PatchIncTable(MultSpeed.Value, BackupAccTable, ref Cargo.accTable);

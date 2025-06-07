@@ -12,7 +12,13 @@ This is updated version of [ProliferatorMultiplier](https://thunderstore.io/c/dy
 1. Click on install with ModManager and follow the steps.
 2. Start the game as usual, config file would be created. Restart game.
 3. Edit "Dyson Sphere Program\BepInEx\config\proliferatormultiplier.cfg" parameters
-`MultProd`, `MultSpeed` and `MultEnergy` to your preferences.
+   `MultProd`, `MultSpeed` and `MultEnergy` to your preferences.
+
+
+## Changelog
+
+#### V1.0.3
+- Init patch only after game save is loaded
 
 #### V1.0.0
 - Initial

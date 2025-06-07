@@ -14,5 +14,8 @@ This is updated version of [ProliferatorMultiplier](https://thunderstore.io/c/dy
 3. Edit "Dyson Sphere Program\BepInEx\config\proliferatormultiplier.cfg" parameters
 `MultProd`, `MultSpeed` and `MultEnergy` to your preferences.
 
+#### V1.0.3
+- Init patch only after game save is loaded
+
 #### V1.0.0
 - Initial
