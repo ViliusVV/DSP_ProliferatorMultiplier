@@ -11,22 +11,23 @@ namespace ProliferatorMultiplier
         private const string PluginVersion = "1.0";
         
         private static bool _wasF5DownLastFrame = false;
-        private static readonly bool IsDev = Debug.isDebugBuild;
         
         private void Awake()
         {
-            Logger.LogInfo($"Plugin {PluginName} is loaded! Version: {PluginVersion}");
-            if (IsDev)
+            Logger.LogInfo($"Plugin {PluginName} is loaded! Version: {PluginVersion}, Dev Mode: {Utils.IsDev}");
+            if (Utils.IsDev)
             {
                 Logger.LogInfo("Running in development mode. F5 key will reload config");   
             }
+            
+            
             
             PatchProliferator.Init(Config, Logger);
         }
         
         private void Update()
         {
-            if(!IsDev) return;
+            if(!Utils.IsDev) return;
             
             var isF5Down = Input.GetKey(KeyCode.F5);
 

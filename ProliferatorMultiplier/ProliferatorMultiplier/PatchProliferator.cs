@@ -67,8 +67,7 @@ namespace ProliferatorMultiplier
             PrintTables(Cargo.powerTable, "Cargo.powerTable");
             PrintTables(Cargo.powerTableRatio, "Cargo.powerTableRatio");
         }
-
-
+        
         private static void InitConfig(ConfigFile confFile)
         {
             Log.LogInfo($"Initializing config from {confFile.ConfigFilePath}...");
@@ -94,7 +93,6 @@ namespace ProliferatorMultiplier
             
             Log.LogInfo("Config initialized with MultProduction: " + MultProduction.Value + ", MultSpeed: " + MultSpeed.Value + ", MultEnergy: " + MultEnergy.Value);
         }
-
 
         public static void Teardown()
         {
@@ -152,13 +150,11 @@ namespace ProliferatorMultiplier
             }
         }
         
-
         private static void PrintTables<T>(T[] table, string tableName)
         {
             Log.LogInfo($"{tableName}: {string.Join(", ", table)}");
         }
-
-
+        
         private static void RestoreTable<T>(ref T[] restoreTo, T[] backup)
         {
             Log.LogInfo("RestoreTable called.");
