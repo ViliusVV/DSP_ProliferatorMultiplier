@@ -8,45 +8,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4d172be3-fc5a-4ced-a604-1e0473e33405" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../.idea/.idea.DSP_ProliferatorMultiplier/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.idea/.idea.DSP_ProliferatorMultiplier/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.idea/.idea.DSP_ProliferatorMultiplier/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.idea/.idea.DSP_ProliferatorMultiplier/.idea/indexLayout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.idea/.idea.DSP_ProliferatorMultiplier/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.idea/.idea.ProliferatorMultiplier/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.run/Launch_DSP.run.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DSP_ProliferatorMultiplier.sln" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DSP_ProliferatorMultiplier.sln.DotSettings" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DSP_ProliferatorMultiplier.sln.DotSettings.user" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PatchProliferator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ProliferatorMultiplier.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ProliferatorMultiplier.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Properties/AssemblyInfo.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Utils.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../thunderstore/ProliferatorMultiplier.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../thunderstore/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../thunderstore/icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../thunderstore/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.DSP_ProliferatorMultiplier/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.DSP_ProliferatorMultiplier/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.DSP_ProliferatorMultiplier/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.DSP_ProliferatorMultiplier/.idea/indexLayout.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.DSP_ProliferatorMultiplier/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ProliferatorMultiplier/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.run/Launch_DSP.run.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DSP_ProliferatorMultiplier.sln" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DSP_ProliferatorMultiplier.sln.DotSettings" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DSP_ProliferatorMultiplier.sln.DotSettings.user" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProliferatorMultiplier/PatchProliferator.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProliferatorMultiplier/ProliferatorMultiplier.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProliferatorMultiplier/ProliferatorMultiplier.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProliferatorMultiplier/Properties/AssemblyInfo.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProliferatorMultiplier/Utils.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/thunderstore/ProliferatorMultiplier.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/thunderstore/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/thunderstore/icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/thunderstore/manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ProliferatorMultiplier/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProliferatorMultiplier/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProliferatorMultiplier/ProliferatorMultiplier.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ProliferatorMultiplier/ProliferatorMultiplier.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thunderstore/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/thunderstore/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thunderstore/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/thunderstore/manifest.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -180,7 +145,7 @@
       <option name="presentableId" value="Default" />
       <updated>1749287001079</updated>
       <workItem from="1749287002157" duration="49000" />
-      <workItem from="1749287059546" duration="17777000" />
+      <workItem from="1749287059546" duration="17209000" />
     </task>
     <task id="LOCAL-00001" summary="updatae">
       <option name="closed" value="true" />

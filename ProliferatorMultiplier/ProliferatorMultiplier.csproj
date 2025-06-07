@@ -35,6 +35,7 @@
         <OutputPath>bin\Release\</OutputPath>
         <DefineConstants>TRACE</DefineConstants>
         <PostBuildEvent>
+          xcopy /Y /D "$(TargetDir)ProliferatorMultiplier.dll" "..\$(TargetDir)"
           xcopy /Y /D "$(TargetDir)ProliferatorMultiplier.dll" "C:\Program Files (x86)\Steam\steamapps\common\Dyson Sphere Program\BepInEx\plugins\ProliferatorMultiplier\"
         </PostBuildEvent>
     </PropertyGroup>
