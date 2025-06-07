@@ -9,8 +9,10 @@ namespace ProliferatorMultiplier
         public static ConfigEntry<int> MultProduction;
         public static ConfigEntry<int> MultSpeed;
 
-        private static double[] CachedArray_AdditionalProduction = new double[0];
-        private static double[] CachedArray_SpeedOfProduction = new double[0];
+        private static double[] Backup_incTableMilli = Array.Empty<double>();
+        private static double[] Backup_accTableMilli = Array.Empty<double>();
+        private static int[] Backup_incTable = Array.Empty<int>();
+        private static int[] Backup_accTable = Array.Empty<int>();
 
         private ConfigFile configFile;
         private ManualLogSource log;
@@ -27,17 +29,27 @@ namespace ProliferatorMultiplier
             InitConfig(configFile);
 
             // Additional production for:
-            // Smelter, assembler, chemical plant, lab extra matrix and extra hashes
-            ArrayHelperStart(MultProduction.Value, ref Cargo.incTableMilli, ref CachedArray_AdditionalProduction);
-
-            // Increased production speed
-            ArrayHelperStart(MultSpeed.Value, ref Cargo.accTableMilli, ref CachedArray_SpeedOfProduction);
+            ArrayHelperStart(MultProduction.Value, ref Cargo.incTableMilli, ref Backup_incTableMilli);
+            ArrayHelperStart(MultProduction.Value, ref Cargo.incTable, ref Backup_incTable);
+            ArrayHelperStart(MultSpeed.Value, ref Cargo.accTableMilli, ref Backup_accTableMilli);
+            ArrayHelperStart(MultSpeed.Value, ref Cargo.accTable, ref Backup_accTable);
+            
+            
+            PrintTables(Backup_incTableMilli, "Backup_incTableMilli");
+            PrintTables(Backup_incTable, "Backup_incTable");
+            PrintTables(Backup_accTableMilli, "Backup_accTableMilli");
+            PrintTables(Backup_accTable, "Backup_accTable");
+            
+            PrintTables(Cargo.incTableMilli, "Cargo.incTableMilli");
+            PrintTables(Cargo.incTable, "Cargo.incTable");
+            PrintTables(Cargo.accTableMilli, "Cargo.accTableMilli");
+            PrintTables(Cargo.accTable, "Cargo.accTable");
         }
 
 
-        void InitConfig(ConfigFile confFile)
+        private void InitConfig(ConfigFile confFile)
         {
-            log.LogInfo("Initializing config...");
+            log.LogInfo("Initializing config from {}...");
             MultProduction = confFile.Bind("1. Additional production",
                 nameof(MultProduction),
                 1,
@@ -57,31 +69,51 @@ namespace ProliferatorMultiplier
         public void End()
         {
             log.LogInfo("ProliferatorMultiplier: Ending...");
-            ArrayHelperEnd(ref Cargo.incTableMilli, ref CachedArray_AdditionalProduction);
-            ArrayHelperEnd(ref Cargo.accTableMilli, ref CachedArray_SpeedOfProduction);
+            ArrayHelperEnd(ref Cargo.incTableMilli, ref Backup_incTableMilli);
+            ArrayHelperEnd(ref Cargo.incTable, ref Backup_incTable);
+            ArrayHelperEnd(ref Cargo.accTableMilli, ref Backup_accTableMilli);
+            ArrayHelperEnd(ref Cargo.accTable, ref Backup_accTable);
             log.LogInfo("ProliferatorMultiplier: Ended.");
         }
 
 
-        void ArrayHelperStart(int value, ref double[] copyFrom, ref double[] copyTo)
+        private void ArrayHelperStart(int value, ref double[] copyFrom, ref double[] copyTo)
         {
-            log.LogInfo("ArrayHelperStart called with value: " + value);
-            int sourceArrayLength = copyFrom.Length;
+            log.LogInfo("ArrayHelperStart<double> called");
+            var sourceArrayLength = copyFrom.Length;
             Array.Resize(ref copyTo, sourceArrayLength);
             Array.Copy(copyFrom, copyTo, sourceArrayLength);
-            for (int i = 0; i < sourceArrayLength; i++)
+            for (var i = 0; i < sourceArrayLength; i++)
             {
                 copyFrom[i] *= value;
             }
         }
+        
+        private void ArrayHelperStart(int value, ref int[] copyFrom, ref int[] copyTo)
+        {
+            log.LogInfo("ArrayHelperStart<double> called");
+            var sourceArrayLength = copyFrom.Length;
+            Array.Resize(ref copyTo, sourceArrayLength);
+            Array.Copy(copyFrom, copyTo, sourceArrayLength);
+            for (var i = 0; i < sourceArrayLength; i++)
+            {
+                copyFrom[i] *= value;
+            }
+        }
+        
+
+        private void PrintTables<T>(T[] table, string tableName)
+        {
+            log.LogInfo($"Proliferator table {tableName}: {string.Join(", ", table)}");
+        }
 
 
-        void ArrayHelperEnd(ref double[] restoreTo, ref double[] restoreFrom)
+        private void ArrayHelperEnd<T>(ref T[] restoreTo, ref T[] restoreFrom)
         {
             log.LogInfo("ArrayHelperEnd called.");
             Assert.True(restoreTo.Length == restoreFrom.Length);
 
-            for (int i = 0; i < restoreFrom.Length; i++)
+            for (var i = 0; i < restoreFrom.Length; i++)
             {
                 restoreTo[i] = restoreFrom[i];
             }
