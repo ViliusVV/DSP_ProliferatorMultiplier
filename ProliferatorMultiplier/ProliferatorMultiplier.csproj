@@ -39,16 +39,16 @@
         copy /Y "$(TargetDir)ProliferatorMultiplier.dll" "$(SolutionDir)thunderstore\ProliferatorMultiplier\ProliferatorMultiplier.dll"
       </PostBuildEvent>
       <PostBuildEvent>
-        powershell -Command "Compress-Archive -Path '$(SolutionDir)thunderstore\*' -DestinationPath '$(SolutionDir)publish.zip' -Force"
+        powershell -Command "Compress-Archive -Path '$(SolutionDir)thunderstore\*' -DestinationPath '$(SolutionDir)ProliferatorMultiplier-1.0.0.zip' -Force"
       </PostBuildEvent>
     </PropertyGroup>
 
-    <ItemGroup>
+    <ItemGroup> 
         <Compile Include="ProliferatorMultiplier.cs" />
         <Compile Include="PatchProliferator.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="Utils.cs" />
-    </ItemGroup>
+    </ItemGroup> 
 
     <ItemGroup>
       <Reference Include="0Harmony">
