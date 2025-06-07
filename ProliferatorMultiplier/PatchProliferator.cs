@@ -21,52 +21,63 @@ namespace ProliferatorMultiplier
         private static ConfigFile ConfigFile;
         private static ManualLogSource Log;
         
-        public static void Init(ConfigFile config, ManualLogSource log)
+        public static void Configure(ConfigFile config, ManualLogSource log)
         {
             ConfigFile = config;
             Log = log;
-            
+            Log.LogInfo("Configuring ProliferatorMultiplier...");
+        }
+
+        public static void Init()
+        {
             Log.LogInfo("Initializing...");
             
-            InitConfig(ConfigFile);
-            Patch();
+            ReloadConfig();
         }
         
         public static void ReloadConfig()
         {
-            Log.LogInfo("Reloading config...");
+            Log.LogInfo("Before...");
+            PrintTables();
+            
             ConfigFile.Reload();
             InitConfig(ConfigFile);
             Patch();
-            Log.LogInfo("Config reloaded.");
         }
 
         private static void Patch()
         {
             // Patch spray bonus tables
-            PatchIncTable(MultProduction.Value, ref Cargo.incTableMilli);
-            PatchIncTable(MultProduction.Value, ref Cargo.incTable);
+            PatchIncTable(MultProduction.Value, BackupIncTableMilli,  ref Cargo.incTableMilli);
+            PatchIncTable(MultProduction.Value, BackupIncTable, ref Cargo.incTable);
             PatchIncDivisionTable(ref Cargo.incFastDivisionNumerator);
-            PatchIncTable(MultSpeed.Value, ref Cargo.accTableMilli);
-            PatchIncTable(MultSpeed.Value, ref Cargo.accTable);
-            PatchIncTable(MultEnergy.Value, ref Cargo.powerTable);
-            PatchPowerTableRatio(MultEnergy.Value, ref Cargo.powerTableRatio);
+            PatchIncTable(MultSpeed.Value, BackupAccTableMilli, ref Cargo.accTableMilli);
+            PatchIncTable(MultSpeed.Value, BackupAccTable, ref Cargo.accTable);
+            PatchIncTable(MultEnergy.Value, BackupPowerTable, ref Cargo.powerTable);
+            PatchPowerTableRatio(MultEnergy.Value, BackupPowerTableRatio, ref Cargo.powerTableRatio);
             
-            PrintTables(BackupIncTableMilli, "Backup_incTableMilli");
-            PrintTables(BackupIncTable, "Backup_incTable");
-            PrintTables(BackupIncFastDivisionNumerator, "Backup_incFastDivisionNumerator");
-            PrintTables(BackupAccTableMilli, "Backup_accTableMilli");
-            PrintTables(BackupAccTable, "Backup_accTable");
-            PrintTables(BackupPowerTable, "Backup_powerTable");
-            PrintTables(BackupPowerTableRatio, "Backup_powerTableRatio");
+            PrintTables();
+        }
+
+        public static void PrintTables()
+        {
+            if (!Utils.IsDev) return;
             
-            PrintTables(Cargo.incTableMilli, "Cargo.incTableMilli");
-            PrintTables(Cargo.incTable, "Cargo.incTable");
-            PrintTables(Cargo.incFastDivisionNumerator, "Cargo.incFastDivisionNumerator");
-            PrintTables(Cargo.accTableMilli, "Cargo.accTableMilli");
-            PrintTables(Cargo.accTable, "Cargo.accTable");
-            PrintTables(Cargo.powerTable, "Cargo.powerTable");
-            PrintTables(Cargo.powerTableRatio, "Cargo.powerTableRatio");
+            PrintTable(BackupIncTableMilli, "Backup_incTableMilli");
+            PrintTable(BackupIncTable, "Backup_incTable");
+            PrintTable(BackupIncFastDivisionNumerator, "Backup_incFastDivisionNumerator");
+            PrintTable(BackupAccTableMilli, "Backup_accTableMilli");
+            PrintTable(BackupAccTable, "Backup_accTable");
+            PrintTable(BackupPowerTable, "Backup_powerTable");
+            PrintTable(BackupPowerTableRatio, "Backup_powerTableRatio");
+            
+            PrintTable(Cargo.incTableMilli, "Cargo.incTableMilli");
+            PrintTable(Cargo.incTable, "Cargo.incTable");
+            PrintTable(Cargo.incFastDivisionNumerator, "Cargo.incFastDivisionNumerator");
+            PrintTable(Cargo.accTableMilli, "Cargo.accTableMilli");
+            PrintTable(Cargo.accTable, "Cargo.accTable");
+            PrintTable(Cargo.powerTable, "Cargo.powerTable");
+            PrintTable(Cargo.powerTableRatio, "Cargo.powerTableRatio");
         }
         
         private static void InitConfig(ConfigFile confFile)
@@ -115,39 +126,39 @@ namespace ProliferatorMultiplier
             return backup;
         }
         
-        private static void PatchIncTable(int mult, ref double[] original)
+        private static void PatchIncTable(int mult, double[] original, ref double[] dest)
         {
             for (var i = 0; i < original.Length; i++)
             {
-                original[i] *= mult;
+                dest[i] = original[i] * mult;
             }
         }
         
-        private static void PatchIncTable(int mult, ref int[] original)
+        private static void PatchIncTable(int mult, int[] original, ref int[] dest)
         {
             for (var i = 0; i < original.Length; i++)
             {
-                original[i] *= mult;
+                dest[i] = original[i] * mult;
             }
         }
         
-        private static void PatchIncDivisionTable(ref int[] original)
+        private static void PatchIncDivisionTable(ref int[] dest)
+        {
+            for (var i = 0; i < dest.Length; i++)
+            {
+                dest[i] = Cargo.incFastDivisionDenominator + (int)Math.Round(Cargo.incTableMilli[i] * Cargo.incFastDivisionDenominator);
+            }
+        }
+        
+        private static void PatchPowerTableRatio(int mult, double[] original, ref double[] dest)
         {
             for (var i = 0; i < original.Length; i++)
             {
-                original[i] = Cargo.incFastDivisionDenominator + (int)Math.Round(Cargo.incTableMilli[i] * Cargo.incFastDivisionDenominator);
+                dest[i] = ((original[i] - 1) * mult) + 1;
             }
         }
         
-        private static void PatchPowerTableRatio(int mult, ref double[] original)
-        {
-            for (var i = 0; i < original.Length; i++)
-            {
-                original[i] = ((original[i] - 1) * mult) + 1;
-            }
-        }
-        
-        private static void PrintTables<T>(T[] table, string tableName)
+        private static void PrintTable<T>(T[] table, string tableName)
         {
             Log.LogInfo($"{tableName}: {string.Join(", ", table)}");
         }
