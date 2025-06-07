@@ -23,10 +23,10 @@ namespace ProliferatorMultiplier
         
         public static void Init(ConfigFile config, ManualLogSource log)
         {
-            Log.LogInfo("Initializing...");
-            
             ConfigFile = config;
             Log = log;
+            
+            Log.LogInfo("Initializing...");
             
             InitConfig(ConfigFile);
             Patch();

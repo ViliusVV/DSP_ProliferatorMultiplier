@@ -20,8 +20,8 @@ namespace ProliferatorMultiplier
                 Logger.LogInfo("Running in development mode. F5 key will reload config");   
             }
             
-            
-            
+            Logger.LogInfo(Config.ToString());
+            Logger.LogInfo(Logger.ToString());
             PatchProliferator.Init(Config, Logger);
         }
         
