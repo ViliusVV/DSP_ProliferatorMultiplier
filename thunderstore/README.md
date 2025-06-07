@@ -1,6 +1,6 @@
-# ProliferatorMultiplier
+# Dyson Sphere Program: ProliferatorMultiplier
 
-## Dyson Sphere Program: ProliferatorMultiplier
+## Description
 This mod let you multiply effect of proliferator.
 
 This is updated version of [ProliferatorMultiplier](https://thunderstore.io/c/dyson-sphere-program/p/DSP_SimpleMods/ProliferatorMultiplier/) as it was no longer working.
