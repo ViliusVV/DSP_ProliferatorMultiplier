@@ -35,6 +35,7 @@ namespace ProliferatorMultiplier
         public static void ReloadConfig()
         {
             Log.LogInfo("Reloading config...");
+            ConfigFile.Reload();
             InitConfig(ConfigFile);
             Patch();
             Log.LogInfo("Config reloaded.");
