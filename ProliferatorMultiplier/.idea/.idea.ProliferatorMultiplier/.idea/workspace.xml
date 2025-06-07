@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4d172be3-fc5a-4ced-a604-1e0473e33405" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/ProliferatorMultiplier/PatchProliferator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ProliferatorMultiplier/PatchProliferator.cs" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DpaMonitoringSettings">
+    <option name="firstShow" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="cidr-memory-view://2" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/ILViewer/f999ac7395074daa93127d73025740376bee00/18/6787f21b/02000086.il" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/23c82cada6174aeea1f2659206cab34d1c600/08/a7dd905e/ManualLogSource.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/23c82cada6174aeea1f2659206cab34d1c600/21/335782f8/ConfigEntry`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/23c82cada6174aeea1f2659206cab34d1c600/6a/093c0fb6/Paths.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/23c82cada6174aeea1f2659206cab34d1c600/6a/683e3a90/BaseUnityPlugin.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/23c82cada6174aeea1f2659206cab34d1c600/9d/69e6d63b/ConfigFile.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2fa7a6a452ca43df998f07fd1486c0df3b8800/ce/4b7dcfe2/Array.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7f26c0a74c5b43c2a5fc5efd29ec63d62e400/3a/6a2037a8/HarmonyPatch.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ba62fd13111e45818db654d4800999fecf600/f5/517daa17/Debug.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f999ac7395074daa93127d73025740376bee00/0e/fa8e7c11/ItemProto.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f999ac7395074daa93127d73025740376bee00/3f/d3460772/UIPowerExchangerWindow.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f999ac7395074daa93127d73025740376bee00/4e/7081cc4c/PowerSystem.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f999ac7395074daa93127d73025740376bee00/4f/209c143c/EjectorComponent.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f999ac7395074daa93127d73025740376bee00/65/387cdfe8/Cargo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f999ac7395074daa93127d73025740376bee00/65/c1da009b/UIControlPanelDispenserInspector.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f999ac7395074daa93127d73025740376bee00/b1/c6c78411/PowerGeneratorComponent.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f999ac7395074daa93127d73025740376bee00/b7/de3afed9/UIItemTip.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f999ac7395074daa93127d73025740376bee00/c4/fdd122c4/LabComponent.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f999ac7395074daa93127d73025740376bee00/ca/fd47ec9d/FractionatorComponent.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f999ac7395074daa93127d73025740376bee00/e3/c660c6ea/Mecha.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/viliu/RiderProjects/DSP-ProliferatorMultiplier/ProliferatorMultiplier/ProliferatorMultiplier/PatchProliferator.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/viliu/RiderProjects/DSP-ProliferatorMultiplier/ProliferatorMultiplier/ProliferatorMultiplier/PatchProliferator.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/viliu/RiderProjects/DSP-ProliferatorMultiplier/ProliferatorMultiplier/ProliferatorMultiplier/Patch_Proliferator.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/viliu/RiderProjects/DSP-ProliferatorMultiplier/ProliferatorMultiplier/ProliferatorMultiplier/Patch_Proliferator.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/viliu/RiderProjects/DSP-ProliferatorMultiplier/ProliferatorMultiplier/ProliferatorMultiplier/Patch_Proliferator.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/viliu/RiderProjects/DSP-ProliferatorMultiplier/ProliferatorMultiplier/ProliferatorMultiplier/Patch_Proliferator.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/viliu/RiderProjects/DSP-ProliferatorMultiplier/ProliferatorMultiplier/ProliferatorMultiplier/Patch_Proliferator.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/viliu/RiderProjects/DSP-ProliferatorMultiplier/ProliferatorMultiplier/ProliferatorMultiplier/ProliferatorMultiplier.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/viliu/RiderProjects/DSP-ProliferatorMultiplier/ProliferatorMultiplier/ProliferatorMultiplier/ProliferatorMultiplier.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/viliu/RiderProjects/DSP-ProliferatorMultiplier/ProliferatorMultiplier/ProliferatorMultiplier/ProliferatorMultiplier.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/viliu/RiderProjects/DSP-ProliferatorMultiplier/ProliferatorMultiplier/ProliferatorMultiplier/ProliferatorMultiplier.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2yAozVDLcZxXcLnQdYISXAS5h1j" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="openDirectoriesWithSingleClick" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="sortKey" value="BY_TIME_DESCENDING" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Shell Script.Launch_DSP.executor": "Debug",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "editor.preferences.smartKeys_rider",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CidrLocalAttachDebugger.recentlyUsed">
+      <recent name="com.jetbrains.rider.cpp.debugger.RiderCppLLDBDriverConfiguration" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Shell Script.Launch_DSP">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <option name="projectPathOnTarget" />
+      <option name="runtimes">
+        <list />
+      </option>
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <option name="useMixedMode" value="false" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Attach to Unity Editor.Attach to Unity Editor" />
+      <item itemvalue="Shell Script.Launch_DSP" />
+    </list>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4d172be3-fc5a-4ced-a604-1e0473e33405" name="Changes" comment="" />
+      <created>1749287001079</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1749287001079</updated>
+      <workItem from="1749287002157" duration="49000" />
+      <workItem from="1749287059546" duration="15479000" />
+    </task>
+    <task id="LOCAL-00001" summary="updatae">
+      <option name="closed" value="true" />
+      <created>1749291187285</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1749291187285</updated>
+    </task>
+    <task id="LOCAL-00002" summary="update">
+      <option name="closed" value="true" />
+      <created>1749294426114</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1749294426114</updated>
+    </task>
+    <task id="LOCAL-00003" summary="update">
+      <option name="closed" value="true" />
+      <created>1749298975933</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1749298975933</updated>
+    </task>
+    <task id="LOCAL-00004" summary="up">
+      <option name="closed" value="true" />
+      <created>1749299004840</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1749299004840</updated>
+    </task>
+    <task id="LOCAL-00005" summary="all tables patched">
+      <option name="closed" value="true" />
+      <created>1749299938463</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1749299938463</updated>
+    </task>
+    <task id="LOCAL-00006" summary="convert to static">
+      <option name="closed" value="true" />
+      <created>1749300750895</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1749300750895</updated>
+    </task>
+    <task id="LOCAL-00007" summary="debug mode">
+      <option name="closed" value="true" />
+      <created>1749301325476</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1749301325476</updated>
+    </task>
+    <task id="LOCAL-00008" summary="fix crash">
+      <option name="closed" value="true" />
+      <created>1749301532199</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1749301532199</updated>
+    </task>
+    <task id="LOCAL-00009" summary="fix reload?">
+      <option name="closed" value="true" />
+      <created>1749301826596</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1749301826596</updated>
+    </task>
+    <task id="LOCAL-00010" summary="update">
+      <option name="closed" value="true" />
+      <created>1749302328915</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1749302328915</updated>
+    </task>
+    <task id="LOCAL-00011" summary="update">
+      <option name="closed" value="true" />
+      <created>1749302477143</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1749302477143</updated>
+    </task>
+    <task id="LOCAL-00012" summary="u">
+      <option name="closed" value="true" />
+      <created>1749302515029</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1749302515029</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="UnityProjectDiscoverer">
+    <option name="hasUnityReference" value="true" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="updatae" />
+    <MESSAGE value="up" />
+    <MESSAGE value="all tables patched" />
+    <MESSAGE value="convert to static" />
+    <MESSAGE value="debug mode" />
+    <MESSAGE value="fix crash" />
+    <MESSAGE value="fix reload?" />
+    <MESSAGE value="update" />
+    <MESSAGE value="u" />
+    <option name="LAST_COMMIT_MESSAGE" value="u" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.OperationCanceledException" breakIfHandledByOtherCode="false" displayValue="System.OperationCanceledException" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.Threading.Tasks.TaskCanceledException" breakIfHandledByOtherCode="false" displayValue="System.Threading.Tasks.TaskCanceledException" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
+          <option name="timeStamp" value="3" />
+        </breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ProliferatorMultiplier/PatchProliferator.cs</url>
+          <line>36</line>
+          <properties documentPath="C:\Users\viliu\RiderProjects\DSP-ProliferatorMultiplier\ProliferatorMultiplier\ProliferatorMultiplier\PatchProliferator.cs" containingFunctionPresentation="Method 'ReloadConfig'">
+            <startOffsets>
+              <option value="1436" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1471" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
