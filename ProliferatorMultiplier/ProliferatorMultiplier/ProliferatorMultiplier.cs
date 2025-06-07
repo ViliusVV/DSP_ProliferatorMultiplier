@@ -1,4 +1,5 @@
 ﻿using BepInEx;
+using UnityEngine;
 
 namespace ProliferatorMultiplier
 {
@@ -9,14 +10,32 @@ namespace ProliferatorMultiplier
         private const string PluginName = "ProliferatorMultiplier";
         private const string PluginVersion = "1.0";
 
-        private static Patch_Proliferator _plugin;
+        private static PatchProliferator _plugin;
+        private static bool _wasF5DownLastFrame = false;
         
         private void Awake()
         {
             Logger.LogInfo($"Plugin {PluginName} is loaded!");
 
-            _plugin = new Patch_Proliferator(Config, Logger);
+            _plugin = new PatchProliferator(Config, Logger);
             _plugin.Init();
+        }
+        
+        private void Update()
+        {
+            var isF5Down = Input.GetKey(KeyCode.F5);
+
+            if (isF5Down && !_wasF5DownLastFrame)
+            {
+                OnF5Pressed();
+            }
+
+            _wasF5DownLastFrame = isF5Down;
+        }
+
+        private void OnF5Pressed()
+        {
+            Logger.LogInfo("F5 was pressed!");
         }
 
 
