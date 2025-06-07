@@ -29,16 +29,6 @@
         </PostBuildEvent>
     </PropertyGroup>
 
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <DebugType>pdbonly</DebugType>
-        <Optimize>true</Optimize>
-        <OutputPath>bin\Release\</OutputPath>
-        <DefineConstants>TRACE</DefineConstants>
-        <PostBuildEvent>
-          copy /Y "$(TargetDir)ProliferatorMultiplier.dll" "C:\Program Files (x86)\Steam\steamapps\common\Dyson Sphere Program\BepInEx\plugins\ProliferatorMultiplier\"
-        </PostBuildEvent>
-    </PropertyGroup>
-
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Thunderstore|AnyCPU' ">
       <DebugType>pdbonly</DebugType>
       <Optimize>true</Optimize>
@@ -47,6 +37,9 @@
       
       <PostBuildEvent>
         copy /Y "$(TargetDir)ProliferatorMultiplier.dll" "$(SolutionDir)thunderstore\ProliferatorMultiplier\ProliferatorMultiplier.dll"
+      </PostBuildEvent>
+      <PostBuildEvent>
+        powershell -Command "Compress-Archive -Path '$(SolutionDir)thunderstore\*' -DestinationPath '$(SolutionDir)publish.zip' -Force"
       </PostBuildEvent>
     </PropertyGroup>
 
