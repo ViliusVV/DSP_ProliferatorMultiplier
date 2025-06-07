@@ -25,7 +25,7 @@
         <OutputPath>bin\Debug\</OutputPath>
         <DefineConstants>DEBUG;TRACE</DefineConstants>
         <PostBuildEvent> 
-          xcopy /Y /D "$(TargetDir)ProliferatorMultiplier.dll" "C:\Program Files (x86)\Steam\steamapps\common\Dyson Sphere Program\BepInEx\plugins\ProliferatorMultiplier\"
+          copy /Y "$(TargetDir)ProliferatorMultiplier.dll" "C:\Program Files (x86)\Steam\steamapps\common\Dyson Sphere Program\BepInEx\plugins\ProliferatorMultiplier\"
         </PostBuildEvent>
     </PropertyGroup>
 
@@ -35,9 +35,19 @@
         <OutputPath>bin\Release\</OutputPath>
         <DefineConstants>TRACE</DefineConstants>
         <PostBuildEvent>
-          xcopy /Y /D "$(TargetDir)ProliferatorMultiplier.dll" "..\$(TargetDir)"
-          xcopy /Y /D "$(TargetDir)ProliferatorMultiplier.dll" "C:\Program Files (x86)\Steam\steamapps\common\Dyson Sphere Program\BepInEx\plugins\ProliferatorMultiplier\"
+          copy /Y "$(TargetDir)ProliferatorMultiplier.dll" "C:\Program Files (x86)\Steam\steamapps\common\Dyson Sphere Program\BepInEx\plugins\ProliferatorMultiplier\"
         </PostBuildEvent>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Thunderstore|AnyCPU' ">
+      <DebugType>pdbonly</DebugType>
+      <Optimize>true</Optimize>
+      <OutputPath>bin\Release\</OutputPath>
+      <DefineConstants>TRACE</DefineConstants>
+      
+      <PostBuildEvent>
+        copy /Y "$(TargetDir)ProliferatorMultiplier.dll" "$(SolutionDir)thunderstore\ProliferatorMultiplier\ProliferatorMultiplier.dll"
+      </PostBuildEvent>
     </PropertyGroup>
 
     <ItemGroup>
