@@ -10,7 +10,7 @@ namespace ProliferatorMultiplier
     {
         private const string PluginGuid = "viliusvv.proliferatormultiplier";
         private const string PluginName = "ProliferatorMultiplier";
-        private const string PluginVersion = "1.0.3";
+        private const string PluginVersion = "1.1.0";
         
         private static bool _wasF5DownLastFrame = false;
         private Harmony harmony = new(PluginGuid);
@@ -26,7 +26,7 @@ namespace ProliferatorMultiplier
             Logger.LogInfo(Config.ToString());
             Logger.LogInfo(Logger.ToString());
             
-            PatchProliferator.Configure(Config, Logger);
+            PatchProliferator.Init(Config, Logger);
             
             GameLoad_Patch.Log = Logger;
             harmony.PatchAll(typeof(GameLoad_Patch));
@@ -62,7 +62,7 @@ namespace ProliferatorMultiplier
         public static void OnGameMainObjectCreated()
         {
             Log.LogInfo($"OnGameMainObjectCreated patch");
-            PatchProliferator.Init();
+            PatchProliferator.Setup();
         }
     }
 }
