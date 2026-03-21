@@ -1,250 +1,187 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using BepInEx.Configuration;
-using BepInEx.Logging;
 using HarmonyLib;
 
 namespace ProliferatorMultiplier
 {
-    public static class PatchProliferator
+    internal static class PatchProliferator
     {
         private const string ConfigEffectGroup = "Proliferator effect";
         private const string ConfigRecipeGroup = "Proliferator recipe";
 
-        private static readonly int[] RecipeIds = { 106, 107, 108}; // Proliferator recipe ids
-        
+        private static readonly int[] RecipeIds = { 106, 107, 108 }; // Proliferator recipe ids
+
         private static ConfigFile _configFile;
-        private static ManualLogSource Log;
-        
-        // Config entries
-        public static ConfigEntry<float> MultProduction;
-        public static ConfigEntry<float> MultSpeed;
-        public static ConfigEntry<float> MultEnergy;
-        public static ConfigEntry<float> MultRecipeCost;
-        public static ConfigEntry<float> MultRecipeDuration;
-        
-        // --- Original proliferator multiplication lookup tables/values
-        private static readonly double[] BackupIncTableMilli = Utils.CopyTable(ref Cargo.incTableMilli);
-        private static readonly double[] BackupAccTableMilli = Utils.CopyTable(ref Cargo.accTableMilli);
-        private static readonly int[] BackupIncFastDivisionNumerator = Utils.CopyTable(ref Cargo.incFastDivisionNumerator);
-        private static readonly int[] BackupIncTable = Utils.CopyTable(ref Cargo.incTable);
-        private static readonly int[] BackupAccTable = Utils.CopyTable(ref Cargo.accTable);
-        private static readonly int[] BackupPowerTable = Utils.CopyTable(ref Cargo.powerTable);
-        private static readonly double[] BackupPowerTableRatio = Utils.CopyTable(ref Cargo.powerTableRatio);
-        private static readonly Dictionary<int, int[]> OriginalRecipeCost = new();
-        private static readonly Dictionary<int, int> OriginalRecipeDuration = new();
-        
-        public static void Init(ConfigFile config, ManualLogSource log)
+
+        private static ConfigEntry<float> _multProduction;
+        private static ConfigEntry<float> _multSpeed;
+        private static ConfigEntry<float> _multEnergy;
+        private static ConfigEntry<float> _multRecipeCost;
+        private static ConfigEntry<float> _multRecipeDuration;
+
+        private static readonly double[] _backupIncTableMilli            = Utils.CopyTable(Cargo.incTableMilli);
+        private static readonly double[] _backupAccTableMilli            = Utils.CopyTable(Cargo.accTableMilli);
+        private static readonly int[]    _backupIncFastDivisionNumerator = Utils.CopyTable(Cargo.incFastDivisionNumerator);
+        private static readonly int[]    _backupIncTable                 = Utils.CopyTable(Cargo.incTable);
+        private static readonly int[]    _backupAccTable                 = Utils.CopyTable(Cargo.accTable);
+        private static readonly int[]    _backupPowerTable               = Utils.CopyTable(Cargo.powerTable);
+        private static readonly double[] _backupPowerTableRatio          = Utils.CopyTable(Cargo.powerTableRatio);
+
+        private static readonly Dictionary<int, int[]> _originalRecipeCost     = new();
+        private static readonly Dictionary<int, int>   _originalRecipeDuration = new();
+
+        public static void Init(ConfigFile config)
         {
-            config.Save();
             _configFile = config;
-            Log = log;
-            Log.LogInfo("Configuring ProliferatorMultiplier...");
+            BindConfig();
             BackupOriginalRecipes();
-            Log.LogInfo("ProliferatorMultiplier done configuring.");
         }
 
-        public static void Setup()
-        {
-            Log.LogInfo("Initializing...");
-            
-            ReloadConfig();
-        }
-        
+        public static void Setup() => ReloadConfig();
+
         public static void ReloadConfig()
         {
-            Log.LogInfo("Before...");
-            PrintTables();
-            
-            Log.LogInfo("Config file path: " + _configFile.ConfigFilePath);
             _configFile.Reload();
-            InitConfig();
             PatchTables();
             PatchProliferatorRecipes();
+            PrintTables();
+        }
+
+        public static void Teardown()
+        {
+            ProliferatorMultiplier.Logger.LogInfo("Restoring original proliferator state...");
+
+            Array.Copy(_backupIncTableMilli,            Cargo.incTableMilli,            _backupIncTableMilli.Length);
+            Array.Copy(_backupIncTable,                 Cargo.incTable,                 _backupIncTable.Length);
+            Array.Copy(_backupIncFastDivisionNumerator, Cargo.incFastDivisionNumerator, _backupIncFastDivisionNumerator.Length);
+            Array.Copy(_backupAccTableMilli,            Cargo.accTableMilli,            _backupAccTableMilli.Length);
+            Array.Copy(_backupAccTable,                 Cargo.accTable,                 _backupAccTable.Length);
+            Array.Copy(_backupPowerTable,               Cargo.powerTable,               _backupPowerTable.Length);
+            Array.Copy(_backupPowerTableRatio,          Cargo.powerTableRatio,          _backupPowerTableRatio.Length);
+
+            foreach (var id in RecipeIds)
+            {
+                var recipe = GetRecipe(id);
+                if (recipe == null) continue;
+                if (_originalRecipeCost.TryGetValue(id, out var cost))         recipe.ItemCounts = cost;
+                if (_originalRecipeDuration.TryGetValue(id, out var duration)) recipe.TimeSpend  = duration;
+            }
+
+            ProliferatorMultiplier.Logger.LogInfo("Teardown done.");
+        }
+
+        private static void BindConfig()
+        {
+            _multProduction    = Bind(ConfigEffectGroup, "MultProduction",    "Production multiplier for proliferator effect");
+            _multSpeed         = Bind(ConfigEffectGroup, "MultSpeed",         "Speed multiplier for proliferator effect");
+            _multEnergy        = Bind(ConfigEffectGroup, "MultEnergy",        "Energy consumption multiplier for proliferator effect");
+            _multRecipeCost    = Bind(ConfigRecipeGroup, "MultRecipeCost",    "Multiplier for recipe cost");
+            _multRecipeDuration = Bind(ConfigRecipeGroup, "MultRecipeDuration", "Multiplier for spray duration");
+
+            ProliferatorMultiplier.Logger.LogInfo(
+                $"Config: Production={_multProduction.Value}, Speed={_multSpeed.Value}, Energy={_multEnergy.Value}");
+        }
+
+        private static ConfigEntry<float> Bind(string section, string key, string desc) =>
+            _configFile.Bind(section, key, 1f,
+                new ConfigDescription(desc, new AcceptableValueRange<float>(0.01f, 1000f)));
+
+        private static void PatchTables()
+        {
+            MultiplyArrayToDest(_multProduction.Value, _backupIncTable,    Cargo.incTable);
+            MultiplyArrayToDest(_multProduction.Value, _backupIncTableMilli, Cargo.incTableMilli);
+            PatchIncDivisionTable(Cargo.incFastDivisionNumerator);
+            MultiplyArrayToDest(_multSpeed.Value, _backupAccTableMilli, Cargo.accTableMilli);
+            MultiplyArrayToDest(_multSpeed.Value, _backupAccTable,      Cargo.accTable);
+            MultiplyArrayToDest(_multEnergy.Value, _backupPowerTable,   Cargo.powerTable);
+            PatchPowerTableRatio(_multEnergy.Value, _backupPowerTableRatio, Cargo.powerTableRatio);
         }
 
         private static void PatchProliferatorRecipes()
         {
-            Log.LogInfo("Patching spray recipes...");
-            
-            foreach(var r in RecipeIds)
+            foreach (var id in RecipeIds)
             {
-                var recipe = GetRecipe(r);
-                Log.LogInfo("Patching recipe: " + recipe.Name.Translate());
-                MultiplyArrayToDest(MultRecipeCost.Value, OriginalRecipeCost[r], ref recipe.ItemCounts);
-                recipe.TimeSpend = (int)Math.Round((double)OriginalRecipeDuration[r] * MultRecipeDuration.Value);
+                var recipe = GetRecipe(id);
+                if (recipe == null) continue;
+                MultiplyArrayToDest(_multRecipeCost.Value, _originalRecipeCost[id], recipe.ItemCounts);
+                recipe.TimeSpend = (int)Math.Round(_originalRecipeDuration[id] * (double)_multRecipeDuration.Value);
             }
-            
-            
-            foreach (var r in LDB.recipes.dataArray)
-            {
-                Log.LogInfo($"{r.ID} | {r.SID} | {r.index} | {r.Name.Translate()} | {r.TimeSpend} | [{r.Items.Join()}] [{r.ItemCounts.Join()}] [{r.Results.Join()}]");
-            }
-            
 
-            Log.LogInfo("Spray recipes patched.");
+            if (!Utils.IsDev) return;
+            foreach (var r in LDB.recipes.dataArray)
+                ProliferatorMultiplier.Logger.LogDebug(
+                    $"{r.ID} | {r.Name.Translate()} | t={r.TimeSpend} | [{r.ItemCounts.Join()}]");
         }
 
-        private static void PatchTables()
+        private static void BackupOriginalRecipes()
         {
-            // Patch spray bonus tables
-            MultiplyArrayToDest(MultProduction.Value, BackupIncTable, ref Cargo.incTable);
-            MultiplyArrayToDest(MultProduction.Value, BackupIncTableMilli,  ref Cargo.incTableMilli);
-            PatchIncDivisionTable(ref Cargo.incFastDivisionNumerator);
-            MultiplyArrayToDest(MultSpeed.Value, BackupAccTableMilli, ref Cargo.accTableMilli);
-            MultiplyArrayToDest(MultSpeed.Value, BackupAccTable, ref Cargo.accTable);
-            MultiplyArrayToDest(MultEnergy.Value, BackupPowerTable, ref Cargo.powerTable);
-            PatchPowerTableRatio(MultEnergy.Value, BackupPowerTableRatio, ref Cargo.powerTableRatio);
-            
-            PrintTables();
+            foreach (var id in RecipeIds)
+            {
+                var recipe = GetRecipe(id);
+                if (recipe == null) continue;
+                _originalRecipeCost[recipe.ID]     = recipe.ItemCounts;
+                _originalRecipeDuration[recipe.ID] = recipe.TimeSpend;
+                ProliferatorMultiplier.Logger.LogDebug(
+                    $"Backed up recipe {recipe.Name.Translate()}: cost=[{recipe.ItemCounts.Join()}], t={recipe.TimeSpend}");
+            }
         }
 
         public static void PrintTables()
         {
             if (!Utils.IsDev) return;
-            
-            PrintTable(BackupIncTableMilli, "Backup_incTableMilli");
-            PrintTable(BackupIncTable, "Backup_incTable");
-            PrintTable(BackupIncFastDivisionNumerator, "Backup_incFastDivisionNumerator");
-            PrintTable(BackupAccTableMilli, "Backup_accTableMilli");
-            PrintTable(BackupAccTable, "Backup_accTable");
-            PrintTable(BackupPowerTable, "Backup_powerTable");
-            PrintTable(BackupPowerTableRatio, "Backup_powerTableRatio");
-            
-            PrintTable(Cargo.incTableMilli, "Cargo.incTableMilli");
-            PrintTable(Cargo.incTable, "Cargo.incTable");
-            PrintTable(Cargo.incFastDivisionNumerator, "Cargo.incFastDivisionNumerator");
-            PrintTable(Cargo.accTableMilli, "Cargo.accTableMilli");
-            PrintTable(Cargo.accTable, "Cargo.accTable");
-            PrintTable(Cargo.powerTable, "Cargo.powerTable");
-            PrintTable(Cargo.powerTableRatio, "Cargo.powerTableRatio");
-        }
-        
-        private static void InitConfig()
-        {
-            Log.LogInfo($"Initializing config from {_configFile.ConfigFilePath}...");
 
-            MultProduction = CreateConfigEntry(nameof(MultProduction), ConfigEffectGroup, "Production multiplier for proliferator effect");
-            MultSpeed = CreateConfigEntry(nameof(MultSpeed), ConfigEffectGroup, "Speed multiplier for proliferator effect");
-            MultEnergy = CreateConfigEntry(nameof(MultEnergy), ConfigEffectGroup, "Energy consumption multiplier for proliferator effect");
-            MultRecipeCost = CreateConfigEntry(nameof(MultRecipeCost), ConfigRecipeGroup, "Multiplier for recipe cost");
-            MultRecipeDuration = CreateConfigEntry(nameof(MultRecipeDuration), ConfigRecipeGroup, "Multiplier for spray duration");
-            
-            Log.LogInfo("Config initialized with MultProduction: " + MultProduction.Value + ", MultSpeed: " + MultSpeed.Value + ", MultEnergy: " + MultEnergy.Value);
+            void Print<T>(T[] table, string name) =>
+                ProliferatorMultiplier.Logger.LogDebug($"{name}: [{string.Join(", ", table)}]");
+
+            Print(_backupIncTableMilli,            "Backup.incTableMilli");
+            Print(_backupIncTable,                 "Backup.incTable");
+            Print(_backupIncFastDivisionNumerator, "Backup.incFastDivisionNumerator");
+            Print(_backupAccTableMilli,            "Backup.accTableMilli");
+            Print(_backupAccTable,                 "Backup.accTable");
+            Print(_backupPowerTable,               "Backup.powerTable");
+            Print(_backupPowerTableRatio,          "Backup.powerTableRatio");
+
+            Print(Cargo.incTableMilli,            "Cargo.incTableMilli");
+            Print(Cargo.incTable,                 "Cargo.incTable");
+            Print(Cargo.incFastDivisionNumerator, "Cargo.incFastDivisionNumerator");
+            Print(Cargo.accTableMilli,            "Cargo.accTableMilli");
+            Print(Cargo.accTable,                 "Cargo.accTable");
+            Print(Cargo.powerTable,               "Cargo.powerTable");
+            Print(Cargo.powerTableRatio,          "Cargo.powerTableRatio");
         }
 
-        private static ConfigEntry<float> CreateConfigEntry(string key, string section, string desc)
-        {
-            return _configFile.Bind(
-                section: section,
-                key: key,
-                defaultValue: 1f, 
-                configDescription: new ConfigDescription(desc, new AcceptableValueRange<float>(0.01f, 1000f))
-            );
-        }
-
-        public static void Teardown()
-        {
-            Log.LogInfo("Teardown...");
-            Log.LogInfo("Restoring original proliferator tables..");
-            RestoreTable(ref Cargo.incTableMilli, BackupIncTableMilli);
-            RestoreTable(ref Cargo.incTable, BackupIncTable);
-            RestoreTable(ref Cargo.incFastDivisionNumerator, BackupIncFastDivisionNumerator);
-            RestoreTable(ref Cargo.accTableMilli, BackupAccTableMilli);
-            RestoreTable(ref Cargo.accTable, BackupAccTable);
-            RestoreTable(ref Cargo.powerTable, BackupPowerTable);
-            RestoreTable(ref Cargo.powerTableRatio, BackupPowerTableRatio);
-            
-            Log.LogInfo("Restoring recipes..");
-            foreach (var r in RecipeIds)
-            {
-                var recipe = GetRecipe(r);
-                if (OriginalRecipeCost.TryGetValue(r, out var originalCost))
-                {
-                    recipe.ItemCounts = originalCost;
-                }
-                if (OriginalRecipeDuration.TryGetValue(r, out var originalDuration))
-                {
-                    recipe.TimeSpend = originalDuration;
-                }
-            }
-            
-            Log.LogInfo("Teardown done.");
-        }
-        
-        
-        private static void MultiplyArrayToDest(float mult, double[] original, ref double[] dest)
+        private static void MultiplyArrayToDest(float mult, double[] original, double[] dest)
         {
             for (var i = 0; i < original.Length; i++)
-            {
                 dest[i] = original[i] * mult;
-            }
         }
-        
-        private static void MultiplyArrayToDest(float mult, int[] original, ref int[] dest)
+
+        private static void MultiplyArrayToDest(float mult, int[] original, int[] dest)
         {
             for (var i = 0; i < original.Length; i++)
-            {
                 dest[i] = (int)(original[i] * mult);
-            }
         }
-        
-        private static void PatchIncDivisionTable(ref int[] dest)
+
+        private static void PatchIncDivisionTable(int[] dest)
         {
             for (var i = 0; i < dest.Length; i++)
-            {
-                dest[i] = Cargo.incFastDivisionDenominator + (int)Math.Round(Cargo.incTableMilli[i] * Cargo.incFastDivisionDenominator);
-            }
+                dest[i] = Cargo.incFastDivisionDenominator +
+                           (int)Math.Round(Cargo.incTableMilli[i] * Cargo.incFastDivisionDenominator);
         }
-        
-        private static void PatchPowerTableRatio(float mult, double[] original, ref double[] dest)
+
+        private static void PatchPowerTableRatio(float mult, double[] original, double[] dest)
         {
             for (var i = 0; i < original.Length; i++)
-            {
-                dest[i] = ((original[i] - 1) * mult) + 1;
-            }
-        }
-        
-        private static void PrintTable<T>(T[] table, string tableName)
-        {
-            Log.LogInfo($"{tableName}: {string.Join(", ", table)}");
+                dest[i] = (original[i] - 1) * mult + 1;
         }
 
-        private static void BackupOriginalRecipes()
-        {
-            Log.LogInfo("Backing up original recipes...");
-            
-            // foreach (var r in LDB.recipes.dataArray)
-            // {
-            //     Log.LogInfo($"{r.ID} | {r.SID} | {r.index} | {r.Name.Translate()} | {r.TimeSpend} | [{r.Items.Join()}] [{r.ItemCounts.Join()}] [{r.Results.Join()}]");
-            // }
-
-            
-            foreach (var r in RecipeIds)
-            {
-                Log.LogInfo($"Backing up: {r}");
-                var recipe = GetRecipe(r);
-                OriginalRecipeCost[recipe.ID] = recipe.ItemCounts;
-                OriginalRecipeDuration[recipe.ID] = recipe.TimeSpend;
-                Log.LogInfo($"Original recipe {recipe.Name} cost: [{recipe.ItemCounts.Join()}], duration: {recipe.TimeSpend}");
-            }
-            Log.LogInfo("Original recipes backed up.");
-        }
-        
-        private static void RestoreTable<T>(ref T[] restoreTo, T[] backup)
-        {
-            Log.LogInfo("RestoreTable called.");
-            for (var i = 0; i < backup.Length; i++)
-            {
-                restoreTo[i] = backup[i];
-            }
-        }
-        
         private static RecipeProto GetRecipe(int id)
         {
-            var recipe =  LDB.recipes.dataArray.FirstOrDefault(r => r.ID == id);
-            Log.LogError(recipe == null ? $"Recipe with ID {id} not found!" : $"Recipe with ID {id} ([{recipe.Name.Translate()}]) found!");
+            var recipe = LDB.recipes.dataArray.FirstOrDefault(r => r.ID == id);
+            if (recipe == null)
+                ProliferatorMultiplier.Logger.LogError($"Recipe with ID {id} not found!");
             return recipe;
         }
     }

@@ -25,3 +25,9 @@ This is updated version of [ProliferatorMultiplier](https://thunderstore.io/c/dy
 
 #### V1.0.0
 - Initial
+
+
+## Build
+ * Using JetBrains Rider
+ * Debug build config copies dll to r2modman Dev profile
+ * Thunderstore build copies to release folder and makes zip

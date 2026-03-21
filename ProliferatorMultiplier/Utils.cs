@@ -1,19 +1,19 @@
-﻿using System;
+using System;
 
 namespace ProliferatorMultiplier;
 
-public static class Utils
+internal static class Utils
 {
-    #if DEBUG
-        internal const bool IsDev = true;
-    #else
-        internal const bool IsDev = false;
-    #endif
-    
-    public static T[] CopyTable<T>(ref T[] original)
+#if DEBUG
+    internal const bool IsDev = true;
+#else
+    internal const bool IsDev = false;
+#endif
+
+    public static T[] CopyTable<T>(T[] original)
     {
-        var backup = new T[original.Length];
-        Array.Copy(original, backup, original.Length);
-        return backup;
+        var copy = new T[original.Length];
+        Array.Copy(original, copy, original.Length);
+        return copy;
     }
 }

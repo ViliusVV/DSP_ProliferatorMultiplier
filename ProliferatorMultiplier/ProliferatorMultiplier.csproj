@@ -45,6 +45,7 @@
     </PropertyGroup>
 
     <ItemGroup> 
+        <Compile Include="GameLoad_Patch.cs" />
         <Compile Include="ProliferatorMultiplier.cs" />
         <Compile Include="PatchProliferator.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
