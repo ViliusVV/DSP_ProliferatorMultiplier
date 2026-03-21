@@ -1,9 +1,7 @@
-param(
-    [string]$SolutionDir,
-    [string]$ProjectDir
-)
+$SolutionDir = Split-Path $PSScriptRoot -Parent
+$ProjectDir = Join-Path $SolutionDir "ProliferatorMultiplier"
 
-$manifest = Get-Content "$SolutionDir/thunderstore/manifest.json" | ConvertFrom-Json
+$manifest = Get-Content (Join-Path $SolutionDir "thunderstore\manifest.json") | ConvertFrom-Json
 $version = $manifest.version_number
 $buildDate = (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
 
@@ -19,10 +17,10 @@ namespace ProliferatorMultiplier
     }
 }
 "@
-Set-Content "$ProjectDir/Properties/Version.g.cs" $versionCs
+Set-Content (Join-Path $ProjectDir "Properties\Version.g.cs") $versionCs
 
 # Update AssemblyInfo.cs version lines
-$assemblyInfoPath = "$ProjectDir/Properties/AssemblyInfo.cs"
+$assemblyInfoPath = Join-Path $ProjectDir "Properties\AssemblyInfo.cs"
 $assemblyInfo = Get-Content $assemblyInfoPath
 $assemblyInfo = $assemblyInfo -replace 'AssemblyVersion\("[^"]*"\)', "AssemblyVersion(`"$version`")"
 $assemblyInfo = $assemblyInfo -replace 'AssemblyFileVersion\("[^"]*"\)', "AssemblyFileVersion(`"$version`")"
