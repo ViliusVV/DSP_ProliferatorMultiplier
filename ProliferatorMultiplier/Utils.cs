@@ -1,4 +1,6 @@
-﻿namespace ProliferatorMultiplier;
+﻿using System;
+
+namespace ProliferatorMultiplier;
 
 public static class Utils
 {
@@ -7,4 +9,11 @@ public static class Utils
     #else
         internal const bool IsDev = false;
     #endif
+    
+    public static T[] CopyTable<T>(ref T[] original)
+    {
+        var backup = new T[original.Length];
+        Array.Copy(original, backup, original.Length);
+        return backup;
+    }
 }

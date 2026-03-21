@@ -4,6 +4,6 @@ namespace ProliferatorMultiplier
     internal static class VersionInfo
     {
         public const string Value = "1.1.1";
-        public const string BuildDate = "2026-03-21T16:26:39Z";
+        public const string BuildDate = "2026-03-21T16:43:32Z";
     }
 }

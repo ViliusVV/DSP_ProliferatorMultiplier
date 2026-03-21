@@ -12,7 +12,6 @@ namespace ProliferatorMultiplier
         private const string PluginName = "ProliferatorMultiplier";
         private const string PluginVersion = VersionInfo.Value;
         
-        private static bool _wasF5DownLastFrame = false;
         private Harmony harmony = new(PluginGuid);
         
         private void Awake()
@@ -22,10 +21,6 @@ namespace ProliferatorMultiplier
             {
                 Logger.LogInfo("Running in development mode. F5 key will reload config");   
             }
-            
-            Config.Save();
-            Logger.LogInfo(Config.ToString());
-            Logger.LogInfo(Logger.ToString());
             
             PatchProliferator.Init(Config, Logger);
             
@@ -37,15 +32,10 @@ namespace ProliferatorMultiplier
         {
             if(!Utils.IsDev) return;
             
-            /*var isF5Down = Input.GetKey(KeyCode.F5);
-
-            if (isF5Down && !_wasF5DownLastFrame)
-            {
-                PatchProliferator.ReloadConfig();
-                Logger.LogInfo($"F5 was pressed! Reloading config...");
-            }*/
-
-            /*_wasF5DownLastFrame = isF5Down;*/
+            if (!Input.GetKeyDown(KeyCode.F5)) return;
+            
+            PatchProliferator.ReloadConfig();
+            Logger.LogInfo("F5 was pressed! Reloading config...");
         }
 
         private void OnDestroy()
@@ -62,7 +52,7 @@ namespace ProliferatorMultiplier
         [HarmonyPatch(typeof(UIRoot), nameof(UIRoot.OnGameMainObjectCreated))]
         public static void OnGameMainObjectCreated()
         {
-            Log.LogInfo($"OnGameMainObjectCreated patch");
+            Log.LogInfo("OnGameMainObjectCreated patch");
             PatchProliferator.Setup();
         }
     }

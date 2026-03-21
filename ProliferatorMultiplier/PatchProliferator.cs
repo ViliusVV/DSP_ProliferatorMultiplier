@@ -14,30 +14,31 @@ namespace ProliferatorMultiplier
 
         private static readonly int[] RecipeIds = { 106, 107, 108}; // Proliferator recipe ids
         
+        private static ConfigFile _configFile;
+        private static ManualLogSource Log;
+        
+        // Config entries
         public static ConfigEntry<float> MultProduction;
         public static ConfigEntry<float> MultSpeed;
         public static ConfigEntry<float> MultEnergy;
         public static ConfigEntry<float> MultRecipeCost;
         public static ConfigEntry<float> MultRecipeDuration;
         
-        
-        private static readonly double[] BackupIncTableMilli = CopyTable(ref Cargo.incTableMilli);
-        private static readonly double[] BackupAccTableMilli = CopyTable(ref Cargo.accTableMilli);
-        private static readonly int[] BackupIncFastDivisionNumerator = CopyTable(ref Cargo.incFastDivisionNumerator);
-        private static readonly int[] BackupIncTable = CopyTable(ref Cargo.incTable);
-        private static readonly int[] BackupAccTable = CopyTable(ref Cargo.accTable);
-        private static readonly int[] BackupPowerTable = CopyTable(ref Cargo.powerTable);
-        private static readonly double[] BackupPowerTableRatio = CopyTable(ref Cargo.powerTableRatio);
-        
+        // --- Original proliferator multiplication lookup tables/values
+        private static readonly double[] BackupIncTableMilli = Utils.CopyTable(ref Cargo.incTableMilli);
+        private static readonly double[] BackupAccTableMilli = Utils.CopyTable(ref Cargo.accTableMilli);
+        private static readonly int[] BackupIncFastDivisionNumerator = Utils.CopyTable(ref Cargo.incFastDivisionNumerator);
+        private static readonly int[] BackupIncTable = Utils.CopyTable(ref Cargo.incTable);
+        private static readonly int[] BackupAccTable = Utils.CopyTable(ref Cargo.accTable);
+        private static readonly int[] BackupPowerTable = Utils.CopyTable(ref Cargo.powerTable);
+        private static readonly double[] BackupPowerTableRatio = Utils.CopyTable(ref Cargo.powerTableRatio);
         private static readonly Dictionary<int, int[]> OriginalRecipeCost = new();
         private static readonly Dictionary<int, int> OriginalRecipeDuration = new();
-
-        private static ConfigFile ConfigFile;
-        private static ManualLogSource Log;
         
         public static void Init(ConfigFile config, ManualLogSource log)
         {
-            ConfigFile = config;
+            config.Save();
+            _configFile = config;
             Log = log;
             Log.LogInfo("Configuring ProliferatorMultiplier...");
             BackupOriginalRecipes();
@@ -56,8 +57,8 @@ namespace ProliferatorMultiplier
             Log.LogInfo("Before...");
             PrintTables();
             
-            Log.LogInfo("Config file path: " + ConfigFile.ConfigFilePath);
-            ConfigFile.Reload();
+            Log.LogInfo("Config file path: " + _configFile.ConfigFilePath);
+            _configFile.Reload();
             InitConfig();
             PatchTables();
             PatchProliferatorRecipes();
@@ -122,7 +123,7 @@ namespace ProliferatorMultiplier
         
         private static void InitConfig()
         {
-            Log.LogInfo($"Initializing config from {ConfigFile.ConfigFilePath}...");
+            Log.LogInfo($"Initializing config from {_configFile.ConfigFilePath}...");
 
             MultProduction = CreateConfigEntry(nameof(MultProduction), ConfigEffectGroup, "Production multiplier for proliferator effect");
             MultSpeed = CreateConfigEntry(nameof(MultSpeed), ConfigEffectGroup, "Speed multiplier for proliferator effect");
@@ -135,7 +136,7 @@ namespace ProliferatorMultiplier
 
         private static ConfigEntry<float> CreateConfigEntry(string key, string section, string desc)
         {
-            return ConfigFile.Bind(
+            return _configFile.Bind(
                 section: section,
                 key: key,
                 defaultValue: 1f, 
@@ -171,13 +172,7 @@ namespace ProliferatorMultiplier
             
             Log.LogInfo("Teardown done.");
         }
-
-        private static T[] CopyTable<T>(ref T[] original)
-        {
-            var backup = new T[original.Length];
-            Array.Copy(original, backup, original.Length);
-            return backup;
-        }
+        
         
         private static void MultiplyArrayToDest(float mult, double[] original, ref double[] dest)
         {
