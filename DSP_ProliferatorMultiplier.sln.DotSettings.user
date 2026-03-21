@@ -59,5 +59,6 @@
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
   &lt;Assembly Path="C:\Program Files (x86)\Steam\steamapps\common\Dyson Sphere Program\DSPGAME_Data\Managed\Assembly-CSharp.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Users\viliu\RiderProjects\DSP-ProliferatorMultiplier\ProliferatorMultiplier\bin\Release\BepInEx.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\viliu\RiderProjects\DSP-ProliferatorMultiplier\thunderstore\ProliferatorMultiplier\ProliferatorMultiplier.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
 </wpf:ResourceDictionary>
