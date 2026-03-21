@@ -36,17 +36,17 @@
       <DefineConstants>TRACE</DefineConstants>
       
       <PostBuildEvent>
-        copy /Y "$(TargetDir)ProliferatorMultiplier.dll" "$(SolutionDir)thunderstore\ProliferatorMultiplier\ProliferatorMultiplier.dll"        
+        copy /Y "$(TargetDir)ProliferatorMultiplier.dll" "$(SolutionDir)thunderstore\ProliferatorMultiplier\ProliferatorMultiplier.dll"
         copy /Y "$(TargetDir)ProliferatorMultiplier.dll" "$(SolutionDir)release\ProliferatorMultiplier.dll"
-        powershell -Command "Compress-Archive -Path '$(SolutionDir)thunderstore\*' -DestinationPath '$(SolutionDir)release\ProliferatorMultiplier-1.1.0.zip' -Force"
+        powershell -Command "$v = (Get-Content '$(SolutionDir)thunderstore\manifest.json' | ConvertFrom-Json).version_number; Compress-Archive -Path '$(SolutionDir)thunderstore\*' -DestinationPath ('$(SolutionDir)release\ProliferatorMultiplier-' + $v + '.zip') -Force"
         
-        
-        rm "$(SolutionDir)release\ProliferatorMultiplier.dll"
+        del "$(SolutionDir)thunderstore\ProliferatorMultiplier\ProliferatorMultiplier.dll"
       </PostBuildEvent>
     </PropertyGroup>
 
     <ItemGroup> 
         <Compile Include="ProliferatorMultiplier.cs" />
+        <Compile Include="Properties\Version.g.cs" />
         <Compile Include="PatchProliferator.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="Utils.cs" />
@@ -358,4 +358,8 @@
       </Reference>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
+    <Target Name="GenerateVersionFile" BeforeTargets="CoreCompile">
+        <Exec Command="powershell -ExecutionPolicy Bypass -File &quot;$(SolutionDir)scripts\generate-version.ps1&quot; -SolutionDir &quot;$(SolutionDir)&quot; -ProjectDir &quot;$(ProjectDir)&quot;" />
+    </Target>
 </Project>

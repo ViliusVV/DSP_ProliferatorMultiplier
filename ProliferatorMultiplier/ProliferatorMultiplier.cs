@@ -10,7 +10,7 @@ namespace ProliferatorMultiplier
     {
         private const string PluginGuid = "viliusvv.proliferatormultiplier";
         private const string PluginName = "ProliferatorMultiplier";
-        private const string PluginVersion = "1.1.0";
+        private const string PluginVersion = VersionInfo.Value;
         
         private static bool _wasF5DownLastFrame = false;
         private Harmony harmony = new(PluginGuid);
