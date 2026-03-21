@@ -9,13 +9,16 @@ namespace ProliferatorMultiplier
 {
     public static class PatchProliferator
     {
+        private const string ConfigEffectGroup = "Proliferator effect";
+        private const string ConfigRecipeGroup = "Proliferator recipe";
+
         private static readonly int[] RecipeIds = { 106, 107, 108}; // Proliferator recipe ids
         
-        public static ConfigEntry<int> MultProduction;
-        public static ConfigEntry<int> MultSpeed;
-        public static ConfigEntry<int> MultEnergy;
-        public static ConfigEntry<int> MultRecipeCost;
-        public static ConfigEntry<int> MultRecipeDuration;
+        public static ConfigEntry<float> MultProduction;
+        public static ConfigEntry<float> MultSpeed;
+        public static ConfigEntry<float> MultEnergy;
+        public static ConfigEntry<float> MultRecipeCost;
+        public static ConfigEntry<float> MultRecipeDuration;
         
         
         private static readonly double[] BackupIncTableMilli = CopyTable(ref Cargo.incTableMilli);
@@ -121,22 +124,22 @@ namespace ProliferatorMultiplier
         {
             Log.LogInfo($"Initializing config from {ConfigFile.ConfigFilePath}...");
 
-            MultProduction = CreateConfigEntry(nameof(MultProduction), "Additional production", "Production multiplier for proliferator effect");
-            MultSpeed = CreateConfigEntry(nameof(MultSpeed), "Additional speed", "Speed multiplier for proliferator effect");
-            MultEnergy = CreateConfigEntry(nameof(MultEnergy), "Energy consumption", "Energy consumption multiplier for proliferator effect");
-            MultRecipeCost = CreateConfigEntry(nameof(MultRecipeCost), "Recipe cost", "Multiplier for recipe cost");
-            MultRecipeDuration = CreateConfigEntry(nameof(MultRecipeDuration), "Recipe cost", "Multiplier for spray duration");
+            MultProduction = CreateConfigEntry(nameof(MultProduction), ConfigEffectGroup, "Production multiplier for proliferator effect");
+            MultSpeed = CreateConfigEntry(nameof(MultSpeed), ConfigEffectGroup, "Speed multiplier for proliferator effect");
+            MultEnergy = CreateConfigEntry(nameof(MultEnergy), ConfigEffectGroup, "Energy consumption multiplier for proliferator effect");
+            MultRecipeCost = CreateConfigEntry(nameof(MultRecipeCost), ConfigRecipeGroup, "Multiplier for recipe cost");
+            MultRecipeDuration = CreateConfigEntry(nameof(MultRecipeDuration), ConfigRecipeGroup, "Multiplier for spray duration");
             
             Log.LogInfo("Config initialized with MultProduction: " + MultProduction.Value + ", MultSpeed: " + MultSpeed.Value + ", MultEnergy: " + MultEnergy.Value);
         }
 
-        private static ConfigEntry<int> CreateConfigEntry(string key, string section, string desc)
+        private static ConfigEntry<float> CreateConfigEntry(string key, string section, string desc)
         {
             return ConfigFile.Bind(
                 section: section,
                 key: key,
-                defaultValue: 1, 
-                configDescription: new ConfigDescription(desc, new AcceptableValueRange<int>(1, 100))
+                defaultValue: 1f, 
+                configDescription: new ConfigDescription(desc, new AcceptableValueRange<float>(0.01f, 1000f))
             );
         }
 
@@ -176,7 +179,7 @@ namespace ProliferatorMultiplier
             return backup;
         }
         
-        private static void MultiplyArrayToDest(int mult, double[] original, ref double[] dest)
+        private static void MultiplyArrayToDest(float mult, double[] original, ref double[] dest)
         {
             for (var i = 0; i < original.Length; i++)
             {
@@ -184,11 +187,11 @@ namespace ProliferatorMultiplier
             }
         }
         
-        private static void MultiplyArrayToDest(int mult, int[] original, ref int[] dest)
+        private static void MultiplyArrayToDest(float mult, int[] original, ref int[] dest)
         {
             for (var i = 0; i < original.Length; i++)
             {
-                dest[i] = original[i] * mult;
+                dest[i] = (int)(original[i] * mult);
             }
         }
         
@@ -200,7 +203,7 @@ namespace ProliferatorMultiplier
             }
         }
         
-        private static void PatchPowerTableRatio(int mult, double[] original, ref double[] dest)
+        private static void PatchPowerTableRatio(float mult, double[] original, ref double[] dest)
         {
             for (var i = 0; i < original.Length; i++)
             {
@@ -225,7 +228,7 @@ namespace ProliferatorMultiplier
             
             foreach (var r in RecipeIds)
             {
-                Log.LogInfo($"Backuping {r}");
+                Log.LogInfo($"Backing up: {r}");
                 var recipe = GetRecipe(r);
                 OriginalRecipeCost[recipe.ID] = recipe.ItemCounts;
                 OriginalRecipeDuration[recipe.ID] = recipe.TimeSpend;
