@@ -10,17 +10,13 @@ namespace ProliferatorMultiplier
     {
         private const string PluginGuid = "viliusvv.proliferatormultiplier";
         private const string PluginName = "ProliferatorMultiplier";
-        private const string PluginVersion = VersionInfo.Value;
+        private const string PluginVersion = VersionInfo.Version;
         
         private Harmony harmony = new(PluginGuid);
         
         private void Awake()
         {
-            Logger.LogInfo($"Plugin {PluginName} is loaded! Version: {PluginVersion}, Dev Mode: {Utils.IsDev}");
-            if (Utils.IsDev)
-            {
-                Logger.LogInfo("Running in development mode. F5 key will reload config");   
-            }
+            Logger.LogInfo($"==> {PluginName} [{VersionInfo.VersionBuild}], Dev Mode: {Utils.IsDev}");
             
             PatchProliferator.Init(Config, Logger);
             

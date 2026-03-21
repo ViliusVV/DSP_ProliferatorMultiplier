@@ -12,8 +12,9 @@ namespace ProliferatorMultiplier
 {
     internal static class VersionInfo
     {
-        public const string Value = "$version";
+        public const string Version = "$version";
         public const string BuildDate = "$buildDate";
+        public const string VersionBuild = Version + "-" + BuildDate;
     }
 }
 "@
