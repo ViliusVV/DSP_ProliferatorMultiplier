@@ -17,6 +17,10 @@ This is updated version of [ProliferatorMultiplier](https://thunderstore.io/c/dy
 
 ## Changelog
 
+#### V1.2.0
+- New DSP version support
+- Allow decimal muliplier values
+
 #### V1.1.0
 - Allow increasing Proliferator recipe costs
 

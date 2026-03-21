@@ -15,17 +15,6 @@ This is updated version of [ProliferatorMultiplier](https://thunderstore.io/c/dy
    `MultProd`, `MultSpeed` and `MultEnergy` to your preferences.
 
 
-## Changelog
-
-#### V1.1.0
-- Allow increasing Proliferator recipe costs
-
-#### V1.0.3
-- Init patch only after game save is loaded
-
-#### V1.0.0
-- Initial
-
 
 ## Build
  * Using JetBrains Rider
