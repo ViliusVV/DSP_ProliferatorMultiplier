@@ -34,7 +34,6 @@ namespace ProliferatorMultiplier
             if (!Input.GetKeyDown(KeyCode.F5)) return;
             
             PatchProliferator.ReloadConfig();
-            Logger.LogInfo("F5: config reloaded.");
         }
 
         private void OnDestroy()

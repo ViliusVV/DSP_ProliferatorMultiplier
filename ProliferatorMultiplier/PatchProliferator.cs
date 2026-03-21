@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BepInEx.Configuration;
 using HarmonyLib;
+using UnityEngine;
 
 namespace ProliferatorMultiplier
 {
@@ -10,6 +11,12 @@ namespace ProliferatorMultiplier
     {
         private const string ConfigEffectGroup = "Proliferator effect";
         private const string ConfigRecipeGroup = "Proliferator recipe";
+
+        private const string KeyMultProduction    = "MultProduction";
+        private const string KeyMultSpeed         = "MultSpeed";
+        private const string KeyMultEnergy        = "MultEnergy";
+        private const string KeyMultRecipeCost    = "MultRecipeCost";
+        private const string KeyMultRecipeDuration = "MultRecipeDuration";
 
         private static readonly int[] RecipeIds = { 106, 107, 108 }; // Proliferator recipe ids
 
@@ -39,14 +46,42 @@ namespace ProliferatorMultiplier
             BackupOriginalRecipes();
         }
 
-        public static void Setup() => ReloadConfig();
+        public static void Setup() => ApplyConfig();
 
-        public static void ReloadConfig()
+        private static void ApplyConfig()
         {
-            _configFile.Reload();
             PatchTables();
             PatchProliferatorRecipes();
             PrintTables();
+        }
+
+        public static void ReloadConfig()
+        {
+            var prevProduction     = _multProduction.Value;
+            var prevSpeed          = _multSpeed.Value;
+            var prevEnergy         = _multEnergy.Value;
+            var prevRecipeCost     = _multRecipeCost.Value;
+            var prevRecipeDuration = _multRecipeDuration.Value;
+
+            _configFile.Reload();
+
+            var changed = false;
+            changed |= LogIfChanged(KeyMultProduction,    prevProduction,     _multProduction.Value);
+            changed |= LogIfChanged(KeyMultSpeed,         prevSpeed,          _multSpeed.Value);
+            changed |= LogIfChanged(KeyMultEnergy,        prevEnergy,         _multEnergy.Value);
+            changed |= LogIfChanged(KeyMultRecipeCost,    prevRecipeCost,     _multRecipeCost.Value);
+            changed |= LogIfChanged(KeyMultRecipeDuration, prevRecipeDuration, _multRecipeDuration.Value);
+
+            if (!changed) ProliferatorMultiplier.Logger.LogInfo("Config reloaded: nothing changed.");
+
+            ApplyConfig();
+        }
+
+        private static bool LogIfChanged(string name, float prev, float curr)
+        {
+            if (Mathf.Approximately(prev, curr)) return false;
+            ProliferatorMultiplier.Logger.LogInfo($"Config changed: {name} {prev} -> {curr}");
+            return true;
         }
 
         public static void Teardown()
@@ -74,11 +109,11 @@ namespace ProliferatorMultiplier
 
         private static void BindConfig()
         {
-            _multProduction    = Bind(ConfigEffectGroup, "MultProduction",    "Production multiplier for proliferator effect");
-            _multSpeed         = Bind(ConfigEffectGroup, "MultSpeed",         "Speed multiplier for proliferator effect");
-            _multEnergy        = Bind(ConfigEffectGroup, "MultEnergy",        "Energy consumption multiplier for proliferator effect");
-            _multRecipeCost    = Bind(ConfigRecipeGroup, "MultRecipeCost",    "Multiplier for recipe cost");
-            _multRecipeDuration = Bind(ConfigRecipeGroup, "MultRecipeDuration", "Multiplier for spray duration");
+            _multProduction    = Bind(ConfigEffectGroup, KeyMultProduction,    "Production multiplier for proliferator effect");
+            _multSpeed         = Bind(ConfigEffectGroup, KeyMultSpeed,         "Speed multiplier for proliferator effect");
+            _multEnergy        = Bind(ConfigEffectGroup, KeyMultEnergy,        "Energy consumption multiplier for proliferator effect");
+            _multRecipeCost    = Bind(ConfigRecipeGroup, KeyMultRecipeCost,    "Multiplier for recipe cost");
+            _multRecipeDuration = Bind(ConfigRecipeGroup, KeyMultRecipeDuration, "Multiplier for spray duration");
 
             ProliferatorMultiplier.Logger.LogInfo(
                 $"Config: Production={_multProduction.Value}, Speed={_multSpeed.Value}, Energy={_multEnergy.Value}");
@@ -128,7 +163,7 @@ namespace ProliferatorMultiplier
             }
         }
 
-        public static void PrintTables()
+        private static void PrintTables()
         {
             if (!Utils.IsDev) return;
 
