@@ -36,10 +36,12 @@
       <DefineConstants>TRACE</DefineConstants>
       
       <PostBuildEvent>
-        copy /Y "$(TargetDir)ProliferatorMultiplier.dll" "$(SolutionDir)thunderstore\ProliferatorMultiplier\ProliferatorMultiplier.dll"
-      </PostBuildEvent>
-      <PostBuildEvent>
-        powershell -Command "Compress-Archive -Path '$(SolutionDir)thunderstore\*' -DestinationPath '$(SolutionDir)ProliferatorMultiplier-1.1.0.zip' -Force"
+        copy /Y "$(TargetDir)ProliferatorMultiplier.dll" "$(SolutionDir)thunderstore\ProliferatorMultiplier\ProliferatorMultiplier.dll"        
+        copy /Y "$(TargetDir)ProliferatorMultiplier.dll" "$(SolutionDir)release\ProliferatorMultiplier.dll"
+        powershell -Command "Compress-Archive -Path '$(SolutionDir)thunderstore\*' -DestinationPath '$(SolutionDir)release\ProliferatorMultiplier-1.1.0.zip' -Force"
+        
+        
+        rm "$(SolutionDir)release\ProliferatorMultiplier.dll"
       </PostBuildEvent>
     </PropertyGroup>
 
