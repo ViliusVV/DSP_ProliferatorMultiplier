@@ -53,6 +53,7 @@ namespace ProliferatorMultiplier
             Log.LogInfo("Before...");
             PrintTables();
             
+            Log.LogInfo("Config file path: " + ConfigFile.ConfigFilePath);
             ConfigFile.Reload();
             InitConfig();
             PatchTables();

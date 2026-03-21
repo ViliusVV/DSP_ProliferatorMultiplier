@@ -23,6 +23,7 @@ namespace ProliferatorMultiplier
                 Logger.LogInfo("Running in development mode. F5 key will reload config");   
             }
             
+            Config.Save();
             Logger.LogInfo(Config.ToString());
             Logger.LogInfo(Logger.ToString());
             
@@ -36,15 +37,15 @@ namespace ProliferatorMultiplier
         {
             if(!Utils.IsDev) return;
             
-            var isF5Down = Input.GetKey(KeyCode.F5);
+            /*var isF5Down = Input.GetKey(KeyCode.F5);
 
             if (isF5Down && !_wasF5DownLastFrame)
             {
                 PatchProliferator.ReloadConfig();
                 Logger.LogInfo($"F5 was pressed! Reloading config...");
-            }
+            }*/
 
-            _wasF5DownLastFrame = isF5Down;
+            /*_wasF5DownLastFrame = isF5Down;*/
         }
 
         private void OnDestroy()
